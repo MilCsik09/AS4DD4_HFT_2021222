@@ -13,7 +13,7 @@ namespace AS4DD4_HFT_2021222.Repository
         public virtual DbSet<Computer> Computers { get; set; }
         public virtual DbSet<CPU> CPUs { get; set; }
         public virtual DbSet<VGA> VGAs { get; set; }
-        public virtual DbSet<Brand<Type>> Brands { get; set; }
+        public virtual DbSet<Brand> Brands { get; set; }
 
 
         public ComputerRepairDbContext()
@@ -36,61 +36,59 @@ namespace AS4DD4_HFT_2021222.Repository
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
-            modelBuilder.Entity<Computer>(entity =>
-            {
-                entity.HasOne(computer => computer.Cpu)
-                    .WithMany(cpu => cpu.Computers)
-                    .OnDelete(DeleteBehavior.ClientSetNull);
-            });
-            modelBuilder.Entity<Computer>(entity =>
-            {
-                entity.HasOne(computer => computer.Vga)
-                    .WithMany(vga => vga.Computers)
-                    .OnDelete(DeleteBehavior.ClientSetNull);
-            });
             modelBuilder.Entity<CPU>(entity =>
             {
                 entity.HasOne(cpu => cpu.Brand)
-                    .WithMany(brand => brand.Products)
+                    .WithMany(brand => brand.CpuProducts)
                     .HasForeignKey(cpu => cpu.BrandId)
                     .OnDelete(DeleteBehavior.ClientSetNull);
             });
             modelBuilder.Entity<VGA>(entity =>
             {
                 entity.HasOne(vga => vga.Brand)
-                    .WithMany(brand => brand.Products)
+                    .WithMany(brand => brand.VgaProducts)
                     .HasForeignKey(vga => vga.BrandId)
                     .OnDelete(DeleteBehavior.ClientSetNull);
             });
+            modelBuilder.Entity<Computer>(entity =>
+            {
+                entity.HasOne(computer => computer.Cpu)
+                    .WithMany(cpu => cpu.Computers)
+                    .HasForeignKey(computer => computer.CpuId)
+                    .OnDelete(DeleteBehavior.ClientSetNull);
+            });
+            modelBuilder.Entity<Computer>(entity =>
+            {
+                entity.HasOne(computer => computer.Vga)
+                    .WithMany(vga => vga.Computers)
+                    .HasForeignKey(computer => computer.VgaId)
+                    .OnDelete(DeleteBehavior.ClientSetNull);
+            });
 
-            Brand<CPU> intel = new Brand<CPU>() { Id = 1, Name = "Intel" };
-            Brand<CPU> amd = new Brand<CPU>() { Id = 2, Name = "AMD" };
 
-            Brand<VGA> nvidia = new Brand<VGA>() { Id = 1, Name = "Nvidia" };
-            Brand<VGA> amdvga = new Brand<VGA>() { Id = 2, Name = "AMD" };
+            Brand intel = new Brand() { Id = 1, Name = "Intel" };
+            Brand amd = new Brand() { Id = 2, Name = "AMD" };
+            Brand nvidia = new Brand() { Id = 3, Name = "Nvidia" };
+            Brand amdvga = new Brand() { Id = 4, Name = "AMD VGA" };
 
-            CPU icpu1 = new CPU() { Brand = intel, Model = "I7", Price = 1500};
-            CPU icpu2 = new CPU() { Brand = intel, Model = "I9", Price = 3000 };
+            CPU icpu1 = new CPU() { Id = 1, BrandId = intel.Id, Model = "I7", Price = 1500 };
+            CPU icpu2 = new CPU() { Id = 2, BrandId = intel.Id, Model = "I9", Price = 3000 };
+            CPU acpu1 = new CPU() { Id = 3, Model = "Ryzen 7", Price = 1000, BrandId = amd.Id };
+            CPU acpu2 = new CPU() { Id = 4, Model = "Ryzen 9", Price = 2500, BrandId = amd.Id };
 
-            CPU acpu1 = new CPU() { Brand = amd, Model = "Ryzen 7", Price = 1000 };
-            CPU acpu2 = new CPU() { Brand = amd, Model = "Ryzen 9", Price = 2500 };
+            VGA nvga1 = new VGA() { Id = 1, Model = "GTX 1080TI", Price = 10000, BrandId = nvidia.Id };
+            VGA nvga2 = new VGA() { Id = 2, Model = "RTX 3080TI", Price = 50000, BrandId = nvidia.Id };
+            VGA avga1 = new VGA() { Id = 3, Model = "RX 6700", Price = 10000, BrandId = amdvga.Id };
+            VGA avga2 = new VGA() { Id = 4, Model = "RX 6800", Price = 30000, BrandId = amdvga.Id };
 
-            VGA nvga1 = new VGA() { Brand = nvidia, Model = "GTX 1080TI", Price = 10000 };
-            VGA nvga2 = new VGA() { Brand = nvidia, Model = "RTX 3080TI", Price = 50000 };
+            Computer c1 = new Computer() { Id = 1, CpuId = icpu1.Id, VgaId = nvga1.Id };
+            Computer c2 = new Computer() { Id = 2, CpuId = icpu2.Id, VgaId = nvga2.Id };
+            Computer c3 = new Computer() { Id = 3, CpuId = acpu1.Id, VgaId = avga1.Id };
+            Computer c4 = new Computer() { Id = 4, CpuId = acpu2.Id, VgaId = avga2.Id };
 
-            VGA avga1 = new VGA() { Brand = amdvga, Model = "RX 6700", Price = 10000 };
-            VGA avga2 = new VGA() { Brand = amdvga, Model = "RX 6800", Price = 30000 };
-
-            Computer c1 = new Computer() { Cpu = icpu1, Vga = nvga1};
-            Computer c2 = new Computer() { Cpu = icpu2, Vga = nvga2 };
-            Computer c3 = new Computer() { Cpu = acpu1, Vga = avga1 };
-            Computer c4 = new Computer() { Cpu = acpu2, Vga = avga2 };
-
-            modelBuilder.Entity<Brand<CPU>>().HasData(intel, amd);
-            modelBuilder.Entity<Brand<VGA>>().HasData(nvidia, amdvga);
+            modelBuilder.Entity<Brand>().HasData(intel, amd, nvidia, amdvga);
             modelBuilder.Entity<CPU>().HasData(acpu1, acpu2, icpu1, icpu2);
-            modelBuilder.Entity<VGA>().HasData(nvga1,nvga2, avga1, avga2);
+            modelBuilder.Entity<VGA>().HasData(nvga1, nvga2, avga1, avga2);
             modelBuilder.Entity<Computer>().HasData(c1, c2, c3, c4);
         }
     }

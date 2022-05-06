@@ -18,7 +18,7 @@ namespace AS4DD4_HFT_2021222.Repository
 
         public void Create(CPU t)
         {
-            context.VGAs.Add(t);
+            context.CPUs.Add(t);
             context.SaveChanges();
         }
 

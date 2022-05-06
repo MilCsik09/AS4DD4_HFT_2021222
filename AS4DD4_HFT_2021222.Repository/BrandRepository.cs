@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AS4DD4_HFT_2021222.Repository
 {
-    public class BrandRepository : IComputerRepairRepository<Brand<Type>>
+    public class BrandRepository : IComputerRepairRepository<Brand>
     {
         ComputerRepairDbContext context;
         public BrandRepository(ComputerRepairDbContext context)
@@ -15,7 +15,7 @@ namespace AS4DD4_HFT_2021222.Repository
             this.context = context;
         }
 
-        public void Create(Brand<Type> t)
+        public void Create(Brand t)
         {
             context.Brands.Add(t);
             context.SaveChanges();
@@ -27,21 +27,22 @@ namespace AS4DD4_HFT_2021222.Repository
             context.SaveChanges();
         }
 
-        public IQueryable<Brand<Type>> ReadAll()
+        public IQueryable<Brand> ReadAll()
         {
             return context.Brands.AsQueryable();
         }
 
-        public Brand<Type> ReadOne(int id)
+        public Brand ReadOne(int id)
         {
             return context.Brands.FirstOrDefault(x => x.Id == id);
         }
 
-        public void Update(Brand<Type> t)
+        public void Update(Brand t)
         {
-            Brand<Type> old = ReadOne(t.Id);
+            Brand old = ReadOne(t.Id);
 
-            old.Products = t.Products;
+            old.CpuProducts = t.CpuProducts;
+            old.VgaProducts = t.VgaProducts;
             old.Name = t.Name;
 
             context.SaveChanges();
