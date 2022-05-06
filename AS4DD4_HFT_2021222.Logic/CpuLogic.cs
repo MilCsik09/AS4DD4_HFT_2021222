@@ -12,6 +12,11 @@ namespace AS4DD4_HFT_2021222.Logic
     {
         IComputerRepairRepository<CPU> repo;
 
+        public CpuLogic(IComputerRepairRepository<CPU> repo)
+        {
+            this.repo = repo;
+        }
+
         public void Create(CPU t)
         {
             repo.Create(t);

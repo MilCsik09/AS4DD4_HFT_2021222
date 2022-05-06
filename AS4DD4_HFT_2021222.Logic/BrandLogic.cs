@@ -8,11 +8,16 @@ using System.Threading.Tasks;
 
 namespace AS4DD4_HFT_2021222.Logic
 {
-    public class BrandLogic : IComputerRepairLogic<Brand<Type>>
+    public class BrandLogic : IComputerRepairLogic<Brand>
     {
-        IComputerRepairRepository<Brand<Type>> repo;
+        IComputerRepairRepository<Brand> repo;
 
-        public void Create(Brand<Type> t)
+        public BrandLogic(IComputerRepairRepository<Brand> repo)
+        {
+            this.repo = repo;
+        }
+
+        public void Create(Brand t)
         {
             repo.Create(t);
         }
@@ -22,17 +27,17 @@ namespace AS4DD4_HFT_2021222.Logic
             repo.Delete(id);
         }
 
-        public IQueryable<Brand<Type>> ReadAll()
+        public IQueryable<Brand> ReadAll()
         {
             return repo.ReadAll();
         }
 
-        public Brand<Type> ReadOne(int id)
+        public Brand ReadOne(int id)
         {
             return repo.ReadOne(id);
         }
 
-        public void Update(Brand<Type> t)
+        public void Update(Brand t)
         {
             repo.Update(t);
         }

@@ -12,6 +12,11 @@ namespace AS4DD4_HFT_2021222.Logic
     {
         IComputerRepairRepository<VGA> repo;
 
+        public VgaLogic(IComputerRepairRepository<VGA> repo)
+        {
+            this.repo = repo;
+        }
+
         public void Create(VGA t)
         {
             repo.Create(t);

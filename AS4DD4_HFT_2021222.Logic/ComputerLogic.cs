@@ -12,6 +12,11 @@ namespace AS4DD4_HFT_2021222.Logic
     {
         IComputerRepairRepository<Computer> repo;
 
+        public ComputerLogic(IComputerRepairRepository<Computer> repo)
+        {
+            this.repo = repo;
+        }
+
         public void Create(Computer t)
         {
             repo.Create(t);
