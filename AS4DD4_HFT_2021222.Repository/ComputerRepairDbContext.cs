@@ -13,6 +13,7 @@ namespace AS4DD4_HFT_2021222.Repository
         public virtual DbSet<Computer> Computers { get; set; }
         public virtual DbSet<CPU> CPUs { get; set; }
         public virtual DbSet<VGA> VGAs { get; set; }
+        public virtual DbSet<Brand<Type>> Brands { get; set; }
 
 
         public ComputerRepairDbContext()
