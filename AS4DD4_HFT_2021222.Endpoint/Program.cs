@@ -1,3 +1,4 @@
+using AS4DD4_HFT_2021222.Repository;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
@@ -13,6 +14,7 @@ namespace AS4DD4_HFT_2021222.Endpoint
     {
         public static void Main(string[] args)
         {
+            ComputerRepairDbContext ctx = new ComputerRepairDbContext();
             CreateHostBuilder(args).Build().Run();
         }
 
