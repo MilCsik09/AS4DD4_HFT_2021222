@@ -6,6 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.7" />
+  </ItemGroup>
+  
+  <ItemGroup>
     <ProjectReference Include="..\AS4DD4_HFT_2021222.Models\AS4DD4_HFT_2021222.Models.csproj" />
   </ItemGroup>
 
