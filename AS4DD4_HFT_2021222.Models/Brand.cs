@@ -6,13 +6,15 @@ using System.Threading.Tasks;
 
 namespace AS4DD4_HFT_2021222.Models
 {
-    public class Brand<T> : Entity
+    public class Brand : Entity
     {
         public string Name { get; set; }  
-        public virtual ICollection<T> Products { get; set; }
+        public virtual ICollection<CPU> CpuProducts { get; set; }
+        public virtual ICollection<VGA> VgaProducts { get; set; }
         public Brand()
         {
-            this.Products = new HashSet<T>();
+            this.CpuProducts = new HashSet<CPU>();
+            this.VgaProducts = new HashSet<VGA>();
         }
     }
 }
