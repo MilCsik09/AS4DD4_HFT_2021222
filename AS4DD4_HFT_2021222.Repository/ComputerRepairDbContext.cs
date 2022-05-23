@@ -71,15 +71,15 @@ namespace AS4DD4_HFT_2021222.Repository
             Brand nvidia = new Brand() { Id = 3, Name = "Nvidia" };
             Brand amdvga = new Brand() { Id = 4, Name = "AMD VGA" };
 
-            CPU icpu1 = new CPU() { Id = 1, BrandId = intel.Id, Model = "I7", Price = 1500 };
-            CPU icpu2 = new CPU() { Id = 2, BrandId = intel.Id, Model = "I9", Price = 3000 };
-            CPU acpu1 = new CPU() { Id = 3, Model = "Ryzen 7", Price = 1000, BrandId = amd.Id };
-            CPU acpu2 = new CPU() { Id = 4, Model = "Ryzen 9", Price = 2500, BrandId = amd.Id };
+            CPU icpu1 = new CPU() { Id = 1, BrandId = intel.Id, Model = "I7", Price = 1500, isUsed = true, isOperational = true };
+            CPU icpu2 = new CPU() { Id = 2, BrandId = intel.Id, Model = "I9", Price = 3000, isUsed = true, isOperational = true };
+            CPU acpu1 = new CPU() { Id = 3, Model = "Ryzen 7", Price = 1000, BrandId = amd.Id, isUsed = true, isOperational = false };
+            CPU acpu2 = new CPU() { Id = 4, Model = "Ryzen 9", Price = 2500, BrandId = amd.Id, isUsed = true, isOperational = true };
 
-            VGA nvga1 = new VGA() { Id = 1, Model = "GTX 1080TI", Price = 10000, BrandId = nvidia.Id };
-            VGA nvga2 = new VGA() { Id = 2, Model = "RTX 3080TI", Price = 50000, BrandId = nvidia.Id };
-            VGA avga1 = new VGA() { Id = 3, Model = "RX 6700", Price = 10000, BrandId = amdvga.Id };
-            VGA avga2 = new VGA() { Id = 4, Model = "RX 6800", Price = 30000, BrandId = amdvga.Id };
+            VGA nvga1 = new VGA() { Id = 1, Model = "GTX 1080TI", Price = 10000, BrandId = nvidia.Id, isUsed = true, isOperational = false };
+            VGA nvga2 = new VGA() { Id = 2, Model = "RTX 3080TI", Price = 50000, BrandId = nvidia.Id, isUsed = true, isOperational = true };
+            VGA avga1 = new VGA() { Id = 3, Model = "RX 6700", Price = 10000, BrandId = amdvga.Id, isUsed = true, isOperational = true };
+            VGA avga2 = new VGA() { Id = 4, Model = "RX 6800", Price = 30000, BrandId = amdvga.Id, isUsed = true, isOperational = false };
 
             Computer c1 = new Computer() { Id = 1, CpuId = icpu1.Id, VgaId = nvga1.Id };
             Computer c2 = new Computer() { Id = 2, CpuId = icpu2.Id, VgaId = nvga2.Id };
