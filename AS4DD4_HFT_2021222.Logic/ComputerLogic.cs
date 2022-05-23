@@ -41,5 +41,81 @@ namespace AS4DD4_HFT_2021222.Logic
         {
              repo.Update(t);
         }
+        
+        public IEnumerable<Computer> FilterPriceBetween(int MinPrice, int MaxPrice)
+        {
+            List<Computer> filtered = new List<Computer>();
+            foreach (var item in this.repo.ReadAll())
+            {
+                if ((item.Cpu.Price + item.Vga.Price) > MinPrice)
+                {
+                    if ((item.Cpu.Price + item.Vga.Price) < MaxPrice)
+                    {
+                        filtered.Add(item);
+                    }
+                }
+            }
+
+            return filtered;
+        }
+
+        public IEnumerable<Computer> FilterBrand(string brandName)
+        {
+            List<Computer> filtered = new List<Computer>();
+            foreach (var item in this.repo.ReadAll())
+            {
+                if (item.Cpu.Brand.Name.ToLower().Equals(brandName.ToLower()) || item.Vga.Brand.Name.ToLower().Equals(brandName.ToLower()))
+                {
+                        filtered.Add(item);
+                }
+            }
+
+            return filtered;
+        }
+
+        public IEnumerable<Computer> FilterOperational()
+        {
+            List<Computer> filtered = new List<Computer>();
+            foreach (var item in this.repo.ReadAll())
+            {
+                if (item.Cpu.isOperational && item.Vga.isOperational)
+                {
+                    filtered.Add(item);
+                }
+            }
+
+            return filtered;
+        }
+        public IEnumerable<Computer> FilterNonOperational()
+        {
+            List<Computer> filtered = new List<Computer>();
+            foreach (var item in this.repo.ReadAll())
+            {
+                if (!item.Cpu.isOperational || !item.Vga.isOperational)
+                {
+                    filtered.Add(item);
+                }
+            }
+
+            return filtered;
+        }
+
+        public double GetOverallRepairCost()
+        {
+            List<Computer> badComputers = FilterNonOperational().ToList();
+            double totalRepairCost = 0;
+            foreach (var item in badComputers)
+            {
+                if (!item.Cpu.isOperational)
+                {
+                    totalRepairCost += item.Cpu.Price;
+                }
+                if (!item.Vga.isOperational)
+                {
+                    totalRepairCost += item.Vga.Price;
+                }
+            }
+            return totalRepairCost;
+        }
     }
 }
