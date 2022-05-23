@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,6 +9,7 @@ namespace AS4DD4_HFT_2021222.Models
 {
     public class Brand : Entity
     {
+        [Required]
         public string Name { get; set; }  
         public virtual ICollection<CPU> CpuProducts { get; set; }
         public virtual ICollection<VGA> VgaProducts { get; set; }
