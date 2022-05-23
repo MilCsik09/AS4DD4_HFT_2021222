@@ -50,16 +50,16 @@ namespace CarShop.Endpoint.Controllers
             cl.Update(comp);
         }
 
-        [HttpGet("FilterPriceBetween")]
-        public IEnumerable<Computer> FilterPriceBetween([FromHeader] int MinPrice, [FromHeader] int MaxPrice)
+        [HttpGet("FilterPriceBetween/{min}/{max}")]
+        public IEnumerable<Computer> FilterPriceBetween(int min, int max)
         {
-            return (cl as ComputerLogic).FilterPriceBetween(MinPrice, MaxPrice);
+            return (cl as ComputerLogic).FilterPriceBetween(min, max);
         }
 
-        [HttpGet("FilterBrand")]
-        public IEnumerable<Computer> BrandFilter([FromHeader] string Brand)
+        [HttpGet("FilterBrand/{brand}")]
+        public IEnumerable<Computer> BrandFilter(string brand)
         {
-            return (cl as ComputerLogic).FilterBrand(Brand);
+            return (cl as ComputerLogic).FilterBrand(brand);
         }
 
         [HttpGet("FilterOperational")]

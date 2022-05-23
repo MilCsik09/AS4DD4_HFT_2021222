@@ -44,7 +44,6 @@ namespace AS4DD4_HFT_2021222.Repository
             old.Price = t.Price;
             old.Brand = t.Brand;
             old.Model = t.Model;
-            old.Computers = t.Computers;
             
             context.SaveChanges();
         }

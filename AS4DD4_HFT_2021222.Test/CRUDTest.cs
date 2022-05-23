@@ -134,6 +134,5 @@ namespace AS4DD4_HFT_2021222.Test
             Assert.That(() => cpuController.Create(renter), Throws.Nothing);
         }
 
-
     }
 }
