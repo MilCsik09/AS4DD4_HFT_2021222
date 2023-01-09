@@ -52,6 +52,12 @@ namespace AS4DD4_HFT_2021222.Endpoint
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseCors(x => x
+            .AllowCredentials()
+            .AllowAnyMethod()
+            .AllowAnyHeader()
+            .WithOrigins("http://localhost:24722"));
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -68,6 +74,8 @@ namespace AS4DD4_HFT_2021222.Endpoint
                 endpoints.MapControllers();
                 endpoints.MapHub<SignalRHub> ("hub");
             });
+
+            
         }
     }
 }

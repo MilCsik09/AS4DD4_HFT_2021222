@@ -41,8 +41,6 @@ namespace AS4DD4_HFT_2021222.Repository
         {
             Brand old = ReadOne(t.Id);
 
-            old.CpuProducts = t.CpuProducts;
-            old.VgaProducts = t.VgaProducts;
             old.Name = t.Name;
 
             context.SaveChanges();
