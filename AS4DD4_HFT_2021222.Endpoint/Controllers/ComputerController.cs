@@ -1,7 +1,9 @@
-﻿using AS4DD4_HFT_2021222.Logic;
+﻿using AS4DD4_HFT_2021222.Endpoint.Services;
+using AS4DD4_HFT_2021222.Logic;
 using AS4DD4_HFT_2021222.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,10 +16,12 @@ namespace AS4DD4_HFT_2021222.Endpoint.Controllers
     public class ComputerController : ControllerBase
     {
         IComputerRepairLogic<Computer> cl;
+        IHubContext<SignalRHub> hub;
 
-        public ComputerController(IComputerRepairLogic<Computer> cl)
+        public ComputerController(IComputerRepairLogic<Computer> cl, IHubContext<SignalRHub> hub)
         {
             this.cl = cl;
+            this.hub = hub;
         }
 
         [HttpGet]
@@ -35,19 +39,23 @@ namespace AS4DD4_HFT_2021222.Endpoint.Controllers
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+            var ComputerToDelete = cl.ReadOne(id);
             cl.Delete(id);
+            hub.Clients.All.SendAsync("ComputerDeleted", ComputerToDelete);
         }
 
         [HttpPost]
         public void Post([FromBody] Computer comp)
         {
             cl.Create(comp);
+            hub.Clients.All.SendAsync("ComputerCreated", comp);
         }
 
         [HttpPut]
         public void Update([FromBody] Computer comp)
         {
             cl.Update(comp);
+            hub.Clients.All.SendAsync("ComputerUpdated", comp);
         }
 
         [HttpGet("FilterPriceBetween/{min}/{max}")]

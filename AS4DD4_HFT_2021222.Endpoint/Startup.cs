@@ -1,3 +1,4 @@
+using AS4DD4_HFT_2021222.Endpoint.Services;
 using AS4DD4_HFT_2021222.Logic;
 using AS4DD4_HFT_2021222.Models;
 using AS4DD4_HFT_2021222.Repository;
@@ -39,6 +40,7 @@ namespace AS4DD4_HFT_2021222.Endpoint
             services.AddTransient<IComputerRepairRepository<VGA>, VgaRepository>();
             services.AddTransient<IComputerRepairLogic<VGA>, VgaLogic>();
 
+            services.AddSignalR();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -64,6 +66,7 @@ namespace AS4DD4_HFT_2021222.Endpoint
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHub<SignalRHub> ("hub");
             });
         }
     }
