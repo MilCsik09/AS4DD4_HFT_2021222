@@ -41,28 +41,28 @@ namespace AS4DD4_HFT_2021222.Repository
                 entity.HasOne(cpu => cpu.Brand)
                     .WithMany(brand => brand.CpuProducts)
                     .HasForeignKey(cpu => cpu.BrandId)
-                    .OnDelete(DeleteBehavior.ClientSetNull);
+                    .OnDelete(DeleteBehavior.ClientCascade);
             });
             modelBuilder.Entity<VGA>(entity =>
             {
                 entity.HasOne(vga => vga.Brand)
                     .WithMany(brand => brand.VgaProducts)
                     .HasForeignKey(vga => vga.BrandId)
-                    .OnDelete(DeleteBehavior.ClientSetNull);
+                    .OnDelete(DeleteBehavior.ClientCascade);
             });
             modelBuilder.Entity<Computer>(entity =>
             {
                 entity.HasOne(computer => computer.Cpu)
                     .WithMany(cpu => cpu.Computers)
                     .HasForeignKey(computer => computer.CpuId)
-                    .OnDelete(DeleteBehavior.ClientSetNull);
+                    .OnDelete(DeleteBehavior.ClientCascade);
             });
             modelBuilder.Entity<Computer>(entity =>
             {
                 entity.HasOne(computer => computer.Vga)
                     .WithMany(vga => vga.Computers)
                     .HasForeignKey(computer => computer.VgaId)
-                    .OnDelete(DeleteBehavior.ClientSetNull);
+                    .OnDelete(DeleteBehavior.ClientCascade);
             });
 
 
